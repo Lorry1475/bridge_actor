@@ -22,6 +22,8 @@ ethabi = "17.0.0"
 getrandom = { version = "0.2", features = ["custom"]  }
 sha256 = "1.0.3" 
 ic-cdk = "0.3"
+libc = "0.2"
+byteorder = "1.4.3" 
 
 [dev-dependencies]
 fvm = { version = "0.5.1", git = "https://github.com/filecoin-project/ref-fvm" }

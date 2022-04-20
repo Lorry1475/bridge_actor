@@ -1,6 +1,5 @@
 use bls12_381::hash_to_curve::{ExpandMsgXmd, HashToCurve, HashToField};
 use bls12_381::{G1Affine, G1Projective, G2Affine, G2Projective};
-
 pub fn verify(
     msg: Vec<u8>,
     sign_point: &[u8; 48],

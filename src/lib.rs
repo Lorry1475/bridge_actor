@@ -2,9 +2,11 @@ mod block;
 mod block_header;
 mod blockstore;
 mod bls;
+mod bridge;
 mod constant;
 mod legacy_tx;
 mod lorry_address;
+mod util;
 use crate::blockstore::Blockstore;
 use cid::multihash::Code;
 use cid::Cid;
@@ -68,10 +70,10 @@ impl State {
 }
 
 #[no_mangle]
-pub fn invoke(_: u32) -> u32 {
+pub fn invoke(id: u32) -> u32 {
     let ret: Option<RawBytes> = match sdk::message::method_number() {
         1 => constructor(),
-        2 => bls_verify(),
+        2 => submit_block(),
         _ => abort!(USR_UNHANDLED_MESSAGE, "unrecognized method"),
     };
     match ret {
@@ -104,7 +106,20 @@ pub fn constructor() -> Option<RawBytes> {
     None
 }
 
-pub fn bls_verify() -> Option<RawBytes> {
-    fvm_sdk::debug::log("failed to bls verify".to_string());
-    None
+pub fn submit_block() -> Option<RawBytes> {
+    let state = State::load();
+    let res = bridge::BridgeManagement::mock_submit_block();
+    Some(RawBytes::new(
+        format!("ver result :{:?}", res).as_bytes().to_vec(),
+    ))
+}
+
+#[cfg(test)]
+mod bridge_test {
+    use super::*;
+    #[test]
+    fn submit_block_test() {
+        let rs = bridge::BridgeManagement::mock_submit_block();
+        assert_eq!(rs, true);
+    }
 }

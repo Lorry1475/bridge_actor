@@ -52,3 +52,22 @@ impl LegacyTx {
         ])])
     }
 }
+
+pub struct LegacyTxs {
+    pub txs: Vec<LegacyTx>,
+}
+
+impl LegacyTxs {
+    pub fn new(txs: Vec<LegacyTx>) -> Self {
+        Self { txs: txs }
+    }
+
+    pub fn encode(&self) -> Vec<u8> {
+        let mut txs: Vec<Token> = vec![];
+        for i in self.txs.iter() {
+            txs.push(Token::Bytes(i.encode()));
+        }
+
+        encode(&vec![Token::Tuple(vec![Token::Array(txs)])])
+    }
+}

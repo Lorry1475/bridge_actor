@@ -502,6 +502,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "bls12_381",
+ "byteorder 1.4.3",
  "cid",
  "ethabi",
  "fvm",
@@ -512,6 +513,7 @@ dependencies = [
  "getrandom 0.2.6",
  "hex",
  "ic-cdk",
+ "libc",
  "libsecp256k1",
  "multihash",
  "rand 0.8.5",
