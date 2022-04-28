@@ -42,8 +42,7 @@ pub fn invoke(id: u32) -> u32 {
 }
 
 pub fn constructor() -> Option<RawBytes> {
-    let mut state = BridgeManagement::default();
-    state.block_hight = 1u64;
+    let state = BridgeManagement::default();
     state.save();
     None
 }

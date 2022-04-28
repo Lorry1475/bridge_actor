@@ -1,4 +1,4 @@
-use crate::block::Block;
+use crate::block::{Block, BlockReceiptState};
 use crate::block_header::{BlockHeader, Ticket};
 use crate::bls::verify;
 use crate::constant::{Base_Point, Public_Key, DOMAIN};
@@ -25,14 +25,14 @@ use crate::abort;
 pub struct BridgeManagement {
     pub asset: HashMap<FRC20, EthAsset>,
     pub balance: HashMap<ActorID, HashMap<FRC20, Uint256>>,
-    pub block_hight: u64,
+    pub block_receipt: BlockReceiptState,
 }
 impl BridgeManagement {
     pub fn default() -> Self {
         Self {
             asset: HashMap::new(),
             balance: HashMap::new(),
-            block_hight: 0u64,
+            block_receipt: BlockReceiptState::default(),
         }
     }
 
