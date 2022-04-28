@@ -87,7 +87,7 @@ impl BridgeManagement {
             network_id: 0u8,
         };
         let to_asset = LorryAddress {
-            account: "t2q52nekezul32pypy7bs2o44uwztv5lo2nyhsnmy".to_string(),
+            account: "t2bgijtqr6d4pji6plsvh5gkp6cpcpo6d2er4krty".to_string(),
             network_id: 1u8,
         };
         let nonce: Nat = "1".parse().unwrap();
@@ -198,14 +198,15 @@ impl BridgeManagement {
                 &Public_Key,
                 &DOMAIN,
                 &point_base,
-            );
+            )
+            .unwrap();
 
             {
                 //mock_transactions test
-                if result {
-                    let txs = Self::mock_txs();
-                    self.excute_transactions(&txs);
-                }
+                // if result {
+                //     let txs = Self::mock_txs();
+                //     self.excute_transactions(&txs);
+                // }
             }
 
             result

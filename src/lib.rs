@@ -23,7 +23,7 @@ use std::str::FromStr;
 use types::EthAsset;
 
 #[no_mangle]
-pub fn invoke(id: u32) -> u32 {
+pub fn invoke(param: Vec<u8>) -> u32 {
     let ret: Option<RawBytes> = match sdk::message::method_number() {
         1 => constructor(),
         2 => submit_block(),
@@ -49,7 +49,7 @@ pub fn constructor() -> Option<RawBytes> {
 
 pub fn asset_management() -> Option<RawBytes> {
     let mut state = BridgeManagement::load();
-    let frc20_address = "t2pxr3zwllj6cjaclzvqehkeppcooz4kmnj46unwq".to_string();
+    let frc20_address = "t2bgijtqr6d4pji6plsvh5gkp6cpcpo6d2er4krty".to_string();
 
     let eth_address: ic_eth_recover::types::Address =
         "6F241f7dCDa951bdffB00000B4B11C361369bCac".parse().unwrap();
@@ -69,14 +69,14 @@ pub fn submit_block() -> Option<RawBytes> {
     let res = state.mock_submit_block();
     state.save();
     Some(RawBytes::new(
-        format!("ver result :{:?}", res).as_bytes().to_vec(),
+        format!("bls verify result :{:?}", res).as_bytes().to_vec(),
     ))
 }
 
 pub fn balance_of() -> Option<RawBytes> {
     let state = BridgeManagement::load();
     let account: ActorID = 0u64;
-    let token = "t2q52nekezul32pypy7bs2o44uwztv5lo2nyhsnmy".to_string();
+    let token = "t2bgijtqr6d4pji6plsvh5gkp6cpcpo6d2er4krty".to_string();
     let balance = state.balance_of(account, token);
     Some(RawBytes::new(balance.to_string().as_bytes().to_vec()))
 }
@@ -87,16 +87,9 @@ pub fn withdraw_asset() -> Option<RawBytes> {
     let mock_amount = uint256::Uint256 {
         big_uint: mock_amount,
     };
-    let token = "t2q52nekezul32pypy7bs2o44uwztv5lo2nyhsnmy".to_string();
+    let token = "t2bgijtqr6d4pji6plsvh5gkp6cpcpo6d2er4krty".to_string();
     let sender: ActorID = 0u64;
     let balance = state.withdraw_asset(sender, &token, mock_amount);
     state.save();
     None
-}
-
-#[cfg(test)]
-mod bridge_test {
-    use super::*;
-    #[test]
-    fn submit_block_test() {}
 }
